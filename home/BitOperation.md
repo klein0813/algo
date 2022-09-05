@@ -113,3 +113,33 @@
 - 5. 再左移 `24` 位得到高 `8` 位
 
 ![示例](../assets/swar_example.jpg)
+
+```c++
+#include<iostream>
+using namespace std;
+// 遍历
+int one(int num) {
+  int count = 0;
+  while(num) {
+    num &= num -1;
+    count++;
+  }
+  return num;
+}
+// 查表
+int two(int num) {
+  int nums[10001];
+  int index = 0;
+  while(index++ < 10001) {
+    nums[index] = nums[index>>1] + (index&1);
+  }
+  return nums[num];
+}
+// Swar
+int swar(int num) {
+  num = (num & 0x55555555) + ((num>>1) & 0x55555555);
+  num = (num & 0x33333333) + ((num>>2) & 0x33333333);
+  num = (num & 0x0f0f0f0f) + ((num>>4) & 0x0f0f0f0f);
+  return (num * 0x01010101)>>24;
+}
+```
