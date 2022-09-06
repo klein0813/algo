@@ -117,6 +117,7 @@
 ```c++
 #include<iostream>
 using namespace std;
+////// 一个数字中 1 的个数
 // 遍历
 int one(int num) {
   int count = 0;
@@ -141,5 +142,17 @@ int swar(int num) {
   num = (num & 0x33333333) + ((num>>2) & 0x33333333);
   num = (num & 0x0f0f0f0f) + ((num>>4) & 0x0f0f0f0f);
   return (num * 0x01010101)>>24;
+}
+
+//// 求和（位运算）
+int bitAdd(int a, int b) {
+  int x;
+  int an;
+  while (x = a^b, an = a&b) {
+    a = x;
+    b = an<<1;
+  }
+
+  return x;
 }
 ```
